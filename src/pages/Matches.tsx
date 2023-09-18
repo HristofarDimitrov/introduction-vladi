@@ -1,37 +1,34 @@
-import { useEffect, useState } from "react";
-import { getMatches } from "../services/matches";
-import { useQuery } from "@tanstack/react-query";
-import { MatchDays } from "../components/MatchDays";
-import { TodaysMatches } from "../components/TodaysMatches";
+import { useEffect, useState } from "react"
+import { getMatches } from "../services/matches"
+import { useQuery } from "@tanstack/react-query"
+import { MatchDays } from "../components/MatchDays"
+import { TodaysMatches } from "../components/TodaysMatches"
+import { Match } from "../components/TodaysMatches"
 
 export const Matches = () => {
-  const [todaysMatches, setTodaysMatches] = useState([]);
-  const [selectedMatchday, setSelectedMatchday] = useState(6);
+  const [todaysMatches, setTodaysMatches] = useState<Match[]>([])
+  const [selectedMatchday, setSelectedMatchday] = useState<number>(6)
 
-  const { isLoading, isError, data, error } = useQuery({
+  const { isLoading, isError, data, error } = useQuery<any, Error>({
     queryKey: ["matches", selectedMatchday],
     queryFn: () => getMatches(selectedMatchday),
-  });
-
-  const handleMatchdaySelect = (matchday) => {
-    setSelectedMatchday(matchday);
-  };
+  })
 
   useEffect(() => {
     if (data) {
-      setTodaysMatches(data.matches);
+      setTodaysMatches(data.matches)
     }
-  }, [data, selectedMatchday]);
+  }, [data, selectedMatchday])
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <span>Loading...</span>
   }
 
   if (isError) {
-    return <span>Error: {error.message}</span>;
+    return <span>Error: {error.message}</span>
   }
 
-  const matchDays = Array.from({ length: 36 }, (_, index) => index + 1);
+  const matchDays = Array.from({ length: 36 }, (_, index) => index + 1)
 
   return (
     <div className="p-4">
@@ -43,9 +40,9 @@ export const Matches = () => {
       <MatchDays
         matchDays={matchDays}
         selectedMatchday={selectedMatchday}
-        handleMatchdaySelect={handleMatchdaySelect}
+        handleMatchdaySelect={setSelectedMatchday}
       />
       <TodaysMatches todaysMatches={todaysMatches} />
     </div>
-  );
-};
+  )
+}

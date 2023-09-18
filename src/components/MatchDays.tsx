@@ -1,4 +1,12 @@
-export const MatchDays = ({
+import { FC } from "react"
+
+interface MatchDaysProps {
+  matchDays: number[]
+  selectedMatchday: number
+  handleMatchdaySelect: (matchday: number) => void
+}
+
+export const MatchDays: FC<MatchDaysProps> = ({
   matchDays,
   selectedMatchday,
   handleMatchdaySelect,
@@ -18,5 +26,5 @@ export const MatchDays = ({
         </li>
       ))}
     </ul>
-  );
-};
+  )
+}
