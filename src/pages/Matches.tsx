@@ -24,7 +24,6 @@ export const Matches = () => {
   useEffect(() => {
     if (data) {
       setTodaysMatches(data.matches)
-      console.log(data)
     }
   }, [data, selectedMatchday])
 
