@@ -1,12 +1,12 @@
-import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home } from "./pages/Home";
-import { Matches } from "./pages/Matches";
-import { Nav } from "./components/Nav";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import "./App.css"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { Home } from "./pages/Home"
+import { Matches } from "./pages/Matches"
+import { Nav } from "./components/Nav"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient()
 
 function App() {
   return (
@@ -15,14 +15,12 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<Home />}></Route>
-        </Routes>
-        <Routes>
           <Route path="/matches" element={<Matches />}></Route>
         </Routes>
       </Router>
       <ReactQueryDevtools />
     </QueryClientProvider>
-  );
+  )
 }
 
-export default App;
+export default App
