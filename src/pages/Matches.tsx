@@ -5,11 +5,18 @@ import { MatchDays } from "../components/MatchDays"
 import { TodaysMatches } from "../components/TodaysMatches"
 import { Match } from "../components/TodaysMatches"
 
+type MatchData = {
+  competition: {}
+  filters: {}
+  matches: Match[]
+  resultSet: {}
+}
+
 export const Matches = () => {
   const [todaysMatches, setTodaysMatches] = useState<Match[]>([])
   const [selectedMatchday, setSelectedMatchday] = useState<number>(6)
 
-  const { isLoading, isError, data, error } = useQuery<any, Error>({
+  const { isLoading, isError, data, error } = useQuery<MatchData, Error>({
     queryKey: ["matches", selectedMatchday],
     queryFn: () => getMatches(selectedMatchday),
   })
@@ -17,6 +24,7 @@ export const Matches = () => {
   useEffect(() => {
     if (data) {
       setTodaysMatches(data.matches)
+      console.log(data)
     }
   }, [data, selectedMatchday])
 
