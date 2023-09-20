@@ -1,6 +1,6 @@
 import { FC } from "react"
 
-interface Standing {
+export interface StandingObj {
   position: number
   team: {
     id: number
@@ -21,7 +21,7 @@ interface Standing {
 }
 
 interface StandingProps {
-  standing: Standing[]
+  standing: StandingObj[]
 }
 
 export const Standing: FC<StandingProps> = ({ standing }) => {
@@ -29,10 +29,15 @@ export const Standing: FC<StandingProps> = ({ standing }) => {
     <ul>
       {standing.map((team) => (
         <li key={team.team.id}>
-          <div className="flex align-bottom">
-            {team.position}.
-            <img src={team.team.crest} className="w-4 h-4 mx-1 mt-1" />
-            {team.team.shortName} - {team.points} points
+          <div className="inline-flex align-bottom bg-gray-300 rounded-lg pl-1 py-0.5 mb-1 w-auto font-bold">
+            <div className="flex w-6 justify-center">{team.position}.</div>
+            <div className="flex w-40">
+              <img src={team.team.crest} className="w-4 h-4 mx-1 mt-1" />
+              {team.team.shortName}
+            </div>
+            <div className="w-16 px-1 rounded-r-lg bg-gray-300">
+              {team.points} {team.points === 1 ? "pt" : "pts"}
+            </div>
           </div>
         </li>
       ))}

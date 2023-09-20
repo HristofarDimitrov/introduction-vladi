@@ -1,10 +1,17 @@
-import { useEffect, useState } from "react"
 import { getStanding } from "../services/standing"
 import { useQuery } from "@tanstack/react-query"
-import { Standing } from "../components/Standing"
+import { Standing, StandingObj } from "../components/Standing"
+
+type StandingData = {
+  area: {}
+  competition: {}
+  filters: {}
+  season: {}
+  standings: [group: any, stage: string, table: StandingObj[], type: string]
+}
 
 export const Home = () => {
-  const { isLoading, isError, data, error } = useQuery<any, Error>({
+  const { isLoading, isError, data, error } = useQuery<StandingData, Error>({
     queryKey: ["standing"],
     queryFn: getStanding,
   })
@@ -15,10 +22,6 @@ export const Home = () => {
 
   if (isError) {
     return <span>Error: {error.message}</span>
-  }
-
-  if (data) {
-    console.log(data.standings[0].table)
   }
 
   const getCurrentDate = () => {
@@ -34,10 +37,12 @@ export const Home = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl font-bold mb-4">
+      <h1 className="text-3xl font-bold mb-4 flex justify-center text-center sm:justify-start">
         Premier League Standing for {currentDate}
       </h1>
-      <Standing standing={data.standings[0].table} />
+      <div className="flex justify-center sm:justify-start">
+        <Standing standing={data.standings[0].table} />
+      </div>
     </div>
   )
 }
