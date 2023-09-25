@@ -1,16 +1,16 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom"
 
 export const Nav = () => {
   return (
-    <nav className="">
-      <ul className="">
-        <li className="inline-block m-5">
-          <Link to="/">Home</Link>
+    <nav className="font-bold flex justify-center sm:justify-start">
+      <ul>
+        <li className="inline-block m-5 hover:text-gray-500">
+          <NavLink to="/">Home</NavLink>
         </li>
-        <li className="inline-block m-5">
-          <Link to="/matches">Matches</Link>
+        <li className="inline-block m-5 hover:text-gray-500">
+          <NavLink to="/matches">Matches</NavLink>
         </li>
       </ul>
     </nav>
-  );
-};
+  )
+}
