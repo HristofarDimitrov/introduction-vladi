@@ -10,6 +10,9 @@ export const Nav = () => {
         <li className="inline-block m-5 hover:text-gray-500">
           <NavLink to="/matches">Matches</NavLink>
         </li>
+        <li className="inline-block m-5 hover:text-gray-500">
+          <NavLink to="/search">Search</NavLink>
+        </li>
       </ul>
     </nav>
   )
