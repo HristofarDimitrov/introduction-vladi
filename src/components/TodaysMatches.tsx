@@ -67,7 +67,7 @@ export interface TodaysMatchesProp {
 export const TodaysMatches: FC<TodaysMatchesProp> = ({ todaysMatches }) => {
   return (
     <ul>
-      {todaysMatches.map((match: Match) => (
+      {todaysMatches?.map((match: Match) => (
         <li key={match.id}>
           <div className="mx-2 my-3 w-48 bg-gray-300 px-2 py-1 rounded-lg">
             <div className="flex justify-between m-1">

@@ -11,7 +11,7 @@ export const Nav = () => {
           <NavLink to="/matches">Matches</NavLink>
         </li>
         <li className="inline-block m-5 hover:text-gray-500">
-          <NavLink to="/search">Search</NavLink>
+          <NavLink to="/team-matches">Team Matches</NavLink>
         </li>
       </ul>
     </nav>
