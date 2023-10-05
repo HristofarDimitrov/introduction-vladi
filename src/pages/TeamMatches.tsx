@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { getTeamMatches } from "../services/searchTeam"
 import { useQuery } from "@tanstack/react-query"
 import { TodaysMatches } from "../components/TodaysMatches"
@@ -21,24 +21,27 @@ export const TeamMatches = () => {
     queryFn: () => getTeamMatches(teamId),
   })
 
-  const handleSearch = (inputValue: string) => {
-    teams.map((team) => {
-      if (
+  const handleSearch = (inputValue?: string) => {
+    const foundTeam = teams.find(
+      (team) =>
         team.name.toLowerCase() === inputValue?.toLowerCase() ||
         team.shortName.toLowerCase() === inputValue?.toLowerCase() ||
         team.tla.toLowerCase() === inputValue?.toLowerCase()
-      ) {
-        setTeamId(team.id)
-        setSearchPerformed(true)
-      }
-    })
+    )
+    if (foundTeam) {
+      setTeamId(foundTeam.id)
+      setSearchPerformed(true)
+    }
   }
 
-  const handleSelect = (options: Option, search: string) => {
+  const handleSelect = (options: Option<Option<Team>>, search: string) => {
     return (
-      options.data?.name?.toLowerCase().includes(search.toLowerCase()) ||
-      options.data?.shortName?.toLowerCase().includes(search.toLowerCase()) ||
-      options.data?.tla?.toLowerCase().includes(search.toLowerCase())
+      options.label.toLowerCase().includes(search.toLowerCase()) ||
+      options.data.data?.name?.toLowerCase().includes(search.toLowerCase()) ||
+      options.data.data?.shortName
+        ?.toLowerCase()
+        .includes(search.toLowerCase()) ||
+      options.data.data?.tla?.toLowerCase().includes(search.toLowerCase())
     )
   }
 
@@ -50,6 +53,12 @@ export const TeamMatches = () => {
     return <span>Error: {error.message}</span>
   }
 
+  const teamsOptions: Option<Team>[] = teams.map((team) => ({
+    value: team.name,
+    label: team.name,
+    data: { ...team },
+  }))
+
   return (
     <div>
       <div className="my-2">
@@ -59,7 +68,7 @@ export const TeamMatches = () => {
         <Search
           onSearch={handleSearch}
           placeholder="Enter a team name"
-          selectOptions={teams}
+          selectOptions={teamsOptions}
           filterOption={handleSelect}
         />
       </div>

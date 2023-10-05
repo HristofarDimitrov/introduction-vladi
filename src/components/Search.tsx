@@ -1,6 +1,4 @@
-import { useState, FC } from "react"
 import Select from "react-select"
-import { Team } from "../utils/teams"
 
 const customStyles = {
   option: (styles: {}) => ({
@@ -18,43 +16,30 @@ const customStyles = {
   }),
 }
 
-export type Option = {
+export type Option<T> = {
   value: string
   label: string
-  data: Team
+  data: T
 }
 
-type SearchProps = {
-  onSearch: (searchTerm: string) => void
+type SearchProps<T> = {
+  onSearch: (searchTerm?: string) => void
   placeholder?: string
-  selectOptions: Team[]
-  filterOption: (option: Option, inputValue: string) => boolean
+  selectOptions: Option<T>[]
+  filterOption: (option: Option<T>, inputValue: string) => boolean
 }
 
-export const Search: FC<SearchProps> = ({
+export function Search<T>({
   onSearch,
   placeholder = "Enter a search term",
   selectOptions,
   filterOption,
-}) => {
-  console.log(selectOptions)
-  const [selectedOption, setSelectedOption] = useState<Team | null>()
-
-  const handleChange = (selected: Team | null) => {
-    setSelectedOption(selected)
-    if (selected) {
-      onSearch(selected.name)
-    }
-  }
-
+}: SearchProps<T>) {
   return (
     <div className="flex items-center justify-center sm:items-start sm:justify-start">
       <Select
-        value={selectedOption}
-        getOptionLabel={(team) => team.name}
-        getOptionValue={(team) => team.id.toString()}
-        onChange={handleChange}
-        options={selectOptions}
+        onChange={(option: Option<T> | null) => onSearch(option?.value)}
+        options={selectOptions as T[]}
         placeholder={placeholder}
         filterOption={filterOption}
         styles={customStyles}
